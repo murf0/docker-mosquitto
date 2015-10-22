@@ -1,7 +1,8 @@
 FROM alpine:3.2
 
-EXPOSE 1883
-EXPOSE 9883
+EXPOSE 8883
+EXPOSE 8884
+EXPOSE 8885
 
 VOLUME ["/var/lib/mosquitto", "/etc/mosquitto", "/etc/mosquitto.d"]
 
@@ -10,7 +11,7 @@ RUN addgroup -S mosquitto && \
 
 ENV PATH=/usr/local/bin:/usr/local/sbin:$PATH
 
-RUN buildDeps='git alpine-sdk openssl-dev libwebsockets-dev c-ares-dev util-linux-dev hiredis-dev curl-dev libxslt docbook-xsl'; \
+RUN buildDeps='git alpine-sdk openssl-dev libwebsockets-dev c-ares-dev util-linux-dev mysql-dev hiredis-dev curl-dev libxslt docbook-xsl'; \
     mkdir -p /var/lib/mosquitto && \
     touch /var/lib/mosquitto/.keep && \
     mkdir -p /etc/mosquitto.d && \
@@ -27,9 +28,6 @@ RUN buildDeps='git alpine-sdk openssl-dev libwebsockets-dev c-ares-dev util-linu
     git clone git://github.com/jpmens/mosquitto-auth-plug.git && \
     cd mosquitto-auth-plug && \
     cp config.mk.in config.mk && \
-    sed -i "s/BACKEND_REDIS ?= no/BACKEND_REDIS ?= yes/" config.mk && \
-    sed -i "s/BACKEND_HTTP ?= no/BACKEND_HTTP ?= yes/" config.mk && \
-    sed -i "s/BACKEND_MYSQL ?= yes/BACKEND_MYSQL ?= no/" config.mk && \
     sed -i "s/MOSQUITTO_SRC =/MOSQUITTO_SRC = ..\//" config.mk && \
     make && \
     cp auth-plug.so /usr/local/lib/ && \
@@ -39,7 +37,6 @@ RUN buildDeps='git alpine-sdk openssl-dev libwebsockets-dev c-ares-dev util-linu
     apk del $buildDeps && rm -rf /var/cache/apk/*
 
 
-ADD mosquitto.conf /etc/mosquitto/mosquitto.conf
 COPY run.sh /
 
 ENTRYPOINT ["/run.sh"]
