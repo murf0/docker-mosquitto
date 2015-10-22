@@ -16,7 +16,7 @@ RUN buildDeps='git alpine-sdk openssl-dev libwebsockets-dev c-ares-dev util-linu
     touch /var/lib/mosquitto/.keep && \
     mkdir -p /etc/mosquitto.d && \
     apk update && \
-    apk add $buildDeps mysql-client hiredis libwebsockets libuuid c-ares openssl curl ca-certificates && \
+    apk add $buildDeps mysql hiredis libwebsockets libuuid c-ares openssl curl ca-certificates && \
     git clone git://git.eclipse.org/gitroot/mosquitto/org.eclipse.mosquitto.git && \
     cd org.eclipse.mosquitto && \
     git checkout v1.4.4 -b v1.4.4 && \
