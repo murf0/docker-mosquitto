@@ -11,12 +11,12 @@ RUN addgroup -S mosquitto && \
 
 ENV PATH=/usr/local/bin:/usr/local/sbin:$PATH
 
-RUN buildDeps='git alpine-sdk openssl-dev libwebsockets-dev c-ares-dev util-linux-dev mysql-dev hiredis-dev curl-dev libxslt docbook-xsl'; \
+RUN buildDeps='git alpine-sdk openssl-dev mariadb-dev libwebsockets-dev c-ares-dev util-linux-dev hiredis-dev curl-dev libxslt docbook-xsl'; \
     mkdir -p /var/lib/mosquitto && \
     touch /var/lib/mosquitto/.keep && \
     mkdir -p /etc/mosquitto.d && \
     apk update && \
-    apk add $buildDeps mysql-client hiredis libwebsockets libuuid c-ares openssl curl ca-certificates && \
+    apk add $buildDeps mariadb-libs hiredis libwebsockets libuuid c-ares openssl curl ca-certificates && \
     git clone git://git.eclipse.org/gitroot/mosquitto/org.eclipse.mosquitto.git && \
     cd org.eclipse.mosquitto && \
     git checkout v1.4.4 -b v1.4.4 && \
