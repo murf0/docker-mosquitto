@@ -1,13 +1,6 @@
-#!/bin/sh
+#!/usr/bin/with-contenv sh
 set -e
 
 chown mosquitto:mosquitto -R /var/lib/mosquitto
+exec /usr/local/sbin/mosquitto -c /etc/mosquitto/mosquitto.conf
 
-if [ "$1" = 'mosquitto' ]; then
-	#if [ -z "$(ls -A "$PGDATA")" ]; then
-	#fi
-
-	exec /usr/local/sbin/mosquitto -c /etc/mosquitto/mosquitto.conf
-fi
-
-exec "$@"
