@@ -1,4 +1,4 @@
-FROM alpine:3.2
+FROM sillelien/base-alpine:0.10
 
 EXPOSE 8883
 EXPOSE 8884
