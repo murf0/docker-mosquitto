@@ -1,14 +1,16 @@
 #!/usr/bin/env sh
 set -ex
 cd /tmp
-apk upgrade
 apk update
+apk upgrade
 
 PATH=/usr/local/bin:/usr/local/sbin:$PATH
-buildDeps='git alpine-sdk openssl-dev mariadb-dev libwebsockets-dev c-ares-dev util-linux-dev hiredis-dev curl-devvlibxslt docbook-xsl'
+
 mkdir -p /var/lib/mosquitto
 touch /var/lib/mosquitto/.keep
 mkdir -p /etc/mosquitto.d
+
+buildDeps='git alpine-sdk openssl-dev mariadb-dev libwebsockets-dev c-ares-dev util-linux-dev hiredis-dev curl-dev libxslt docbook-xsl'
 apk add $buildDeps mariadb-libs hiredis libwebsockets libuuid c-ares openssl curl ca-certificates
 git clone git://git.eclipse.org/gitroot/mosquitto/org.eclipse.mosquitto.git
 cd org.eclipse.mosquitto
