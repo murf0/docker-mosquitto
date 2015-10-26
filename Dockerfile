@@ -6,7 +6,7 @@ EXPOSE 8885
 
 VOLUME ["/var/lib/mosquitto", "/etc/mosquitto", "/etc/mosquitto.d"]
 
-RUN addgroup -S mosquitto adduser -S -H -h /var/empty -s /sbin/nologin -D -G mosquitto mosquitto
+RUN addgroup -S mosquitto && adduser -S -H -h /var/empty -s /sbin/nologin -D -G mosquitto mosquitto
 
 COPY build.sh /build.sh
 RUN chmod 755 /build.sh
